@@ -1,0 +1,9 @@
+{
+	"name": "colonial-datafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "42d03173-be7b-4e82-81c9-f6b0b7212537",
+		"tenantId": "d87359d0-0ae3-40cc-8bdc-326f146026de"
+	}
+}
