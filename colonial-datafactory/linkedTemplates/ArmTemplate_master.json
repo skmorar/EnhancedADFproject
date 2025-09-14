@@ -1,0 +1,112 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "colonial-datafactory"
+		},
+		"LS_BlobSource_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_BlobSource'"
+		},
+		"LS_DataLake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_DataLake'"
+		},
+		"OnPrem_SqlServer_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OnPrem_SqlServer'"
+		},
+		"ls_adls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_adls'"
+		},
+		"LS_DataLake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://colonialadls.dfs.core.windows.net/"
+		},
+		"LS_GitHub_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/"
+		},
+		"OnPrem_SqlServer_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "SKMORAR\\SQLSCHOOL1"
+		},
+		"OnPrem_SqlServer_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "MyDatabase"
+		},
+		"OnPrem_SqlServer_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sqlschool"
+		},
+		"ls_adls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://colonialadls.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "colonial-datafactory_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_BlobSource_connectionString": {
+						"value": "[parameters('LS_BlobSource_connectionString')]"
+					},
+					"LS_DataLake_accountKey": {
+						"value": "[parameters('LS_DataLake_accountKey')]"
+					},
+					"ls_adls_accountKey": {
+						"value": "[parameters('ls_adls_accountKey')]"
+					},
+					"OnPrem_SqlServer_password": {
+						"value": "[parameters('OnPrem_SqlServer_password')]"
+					},
+					"LS_DataLake_properties_typeProperties_url": {
+						"value": "[parameters('LS_DataLake_properties_typeProperties_url')]"
+					},
+					"LS_GitHub_properties_typeProperties_url": {
+						"value": "[parameters('LS_GitHub_properties_typeProperties_url')]"
+					},
+					"ls_adls_properties_typeProperties_url": {
+						"value": "[parameters('ls_adls_properties_typeProperties_url')]"
+					},
+					"OnPrem_SqlServer_properties_typeProperties_server": {
+						"value": "[parameters('OnPrem_SqlServer_properties_typeProperties_server')]"
+					},
+					"OnPrem_SqlServer_properties_typeProperties_database": {
+						"value": "[parameters('OnPrem_SqlServer_properties_typeProperties_database')]"
+					},
+					"OnPrem_SqlServer_properties_typeProperties_userName": {
+						"value": "[parameters('OnPrem_SqlServer_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
