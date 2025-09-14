@@ -35,10 +35,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataset": {
-						"referenceName": "ds_source",
-						"type": "DatasetReference"
-					},
 					"fieldList": [
 						"childItems"
 					],
@@ -188,12 +184,6 @@
 					},
 					"enableStaging": false
 				},
-				"inputs": [
-					{
-						"referenceName": "ds_source",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "ds_target",
