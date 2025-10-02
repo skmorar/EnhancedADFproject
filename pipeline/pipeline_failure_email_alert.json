@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Set_File_Name",
+				"name": "Set_NewFile_Name",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
