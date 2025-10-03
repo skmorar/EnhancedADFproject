@@ -6,12 +6,12 @@
 		"type": "SqlServer",
 		"typeProperties": {
 			"server": "SKMORAR\\SQLSCHOOL1",
-			"database": "MyDatabase",
+			"database": "PracticeDatabase",
 			"encrypt": "mandatory",
 			"trustServerCertificate": true,
 			"authenticationType": "SQL",
-			"userName": "sqlschool",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiZDdkOWZiNC1hMmQwLTQ3YTQtOGZmMy01NWJiMThiNWU0ZTkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"userName": "sa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIzMzlkZTczMC1kYmNkLTQwYTUtOTRlNi0zMmM3NmFhNTNmZDAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "cs-selfhosted-ir",
