@@ -1,5 +1,5 @@
 {
-	"name": "DeltaCopyfromDB_using_ControlTable",
+	"name": "DeltaCopyfromDB_using_ControlTable1",
 	"properties": {
 		"description": "Copy new or updated rows only from database using external control table",
 		"activities": [
@@ -18,13 +18,13 @@
 					"source": {
 						"type": "SqlSource",
 						"sqlReaderQuery": {
-							"value": "select @{pipeline().parameters.Control_Table_Column_Name} as WatermarkValue from @{pipeline().parameters.Control_Table_Table_Name}",
+							"value": "SELECT @{pipeline().parameters.Control_Table_Column_Name} AS WatermarkValue FROM @{pipeline().parameters.Control_Table_Table_Name} ",
 							"type": "Expression"
 						},
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "SqlServerExternal_ControlTable",
+						"referenceName": "SqlServerExternal_ControlTable1",
 						"type": "DatasetReference"
 					}
 				}
@@ -44,13 +44,13 @@
 					"source": {
 						"type": "SqlSource",
 						"sqlReaderQuery": {
-							"value": "@concat('select MAX(',pipeline().parameters.Data_Source_WaterMarkColumn, ') as NewWatermarkValue from ',pipeline().parameters.Data_Source_Table_Name)",
+							"value": "@concat('SELECT MAX(',pipeline().parameters.Data_Source_WaterMarkColumn, ') AS NewWatermarkValue FROM ',pipeline().parameters.Data_Source_Table_Name)",
 							"type": "Expression"
 						},
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "SqlServerDataSource",
+						"referenceName": "SqlServerDataSource1",
 						"type": "DatasetReference"
 					}
 				}
@@ -83,20 +83,15 @@
 					"source": {
 						"type": "SqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from @{pipeline().parameters.Data_Source_Table_Name} where @{pipeline().parameters.Data_Source_WaterMarkColumn} > '@{activity('LookupLastWaterMark').output.firstRow.WatermarkValue}' and @{pipeline().parameters.Data_Source_WaterMarkColumn} <= '@{activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue}'",
+							"value": "SELECT * FROM @{pipeline().parameters.Data_Source_Table_Name} WHERE @{pipeline().parameters.Data_Source_WaterMarkColumn} > '@{activity('LookupLastWaterMark').output.firstRow.WatermarkValue}' AND @{pipeline().parameters.Data_Source_WaterMarkColumn} <= '@{activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue}'",
 							"type": "Expression"
 						},
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "BinarySink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -104,24 +99,14 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SqlServerDataSource",
+						"referenceName": "SqlServerDataSource1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DataDestination",
-						"type": "DatasetReference",
-						"parameters": {
-							"Data_Destination_Container": {
-								"value": "@pipeline().parameters.Data_Destination_Container",
-								"type": "Expression"
-							},
-							"Data_Destination_Directory": {
-								"value": "@pipeline().parameters.Data_Destination_Directory",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "ds_target",
+						"type": "DatasetReference"
 					}
 				]
 			},
@@ -146,12 +131,12 @@
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[SP_UPDATE_WATERMARKTABLE]",
 					"storedProcedureParameters": {
-						"LastUpdateTimeStamp": {
+						"LastModifyDate": {
 							"value": {
-								"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWaterMarkValue",
+								"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue",
 								"type": "Expression"
 							},
-							"type": "DateTime"
+							"type": "datetime"
 						}
 					}
 				},
