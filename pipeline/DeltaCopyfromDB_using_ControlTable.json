@@ -89,15 +89,7 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
+						"type": "DelimitedTextSink"
 					},
 					"enableStaging": false,
 					"dataIntegrationUnits": 0
@@ -144,14 +136,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[SP_UPDATE_WATERMARKTABLE]",
 					"storedProcedureParameters": {
-						"LastUpdateTimeStamp": {
+						"LastModifyDate": {
 							"value": {
-								"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWaterMarkValue",
+								"value": "@activity('LookupCurrentWaterMark').output.firstRow.NewWatermarkValue",
 								"type": "Expression"
 							},
-							"type": "DateTime"
+							"type": "datetime"
 						}
 					}
 				},
